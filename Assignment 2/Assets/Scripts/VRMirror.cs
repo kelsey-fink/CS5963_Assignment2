@@ -29,7 +29,22 @@ public class VRMirror : MonoBehaviour {
                 isMirror = false;
             }
         }
-        if(isMirror)
+        if (isMatch)
+        {
+            Vector3 currentRotation = transform.rotation.eulerAngles;
+            rotationDiff = 180 - currentRotation.y;
+            Vector3 matchRotation = currentRotation;
+            matchRotation = new Vector3(currentRotation.x, rotationDiff, currentRotation.z * -1);
+            cube.transform.rotation = Quaternion.Euler(matchRotation);
+
+            Vector3 currentPosition = transform.position;
+            Vector3 matchPosition = currentPosition;
+            matchPosition = new Vector3(currentPosition.x, currentPosition.y, 3 - currentPosition.z);
+            cube.transform.position = matchPosition;
+
+            Debug.Log("match");
+        }
+        if (isMirror)
         {
             Vector3 currentRotation = transform.rotation.eulerAngles;
             rotationDiff = 180 - currentRotation.y;
@@ -43,21 +58,6 @@ public class VRMirror : MonoBehaviour {
             cube.transform.position = mirrorPosition;
 
             Debug.Log("mirror");
-        }
-        if(isMatch)
-        {
-            Vector3 currentRotation = transform.rotation.eulerAngles;
-            rotationDiff = 180 - currentRotation.y;
-            Vector3 matchRotation = currentRotation;
-            matchRotation = new Vector3(currentRotation.x * -1, rotationDiff, currentRotation.z * -1);
-            cube.transform.rotation = Quaternion.Euler(matchRotation);
-
-            Vector3 currentPosition = transform.position;
-            Vector3 matchPosition = currentPosition;
-            matchPosition = new Vector3(currentPosition.x, currentPosition.y, 3 - currentPosition.z);
-            cube.transform.position = matchPosition;
-
-            Debug.Log("match");
         }
     }
 }
