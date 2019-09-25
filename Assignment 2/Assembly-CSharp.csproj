@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraFlipper.cs" />
     <Compile Include="Assets\Scripts\CameraReset.cs" />
+    <Compile Include="Assets\Scripts\VRMirror.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>/Users/KelseyFink/Desktop/Virtual Reality/Assignment 2/Github/CS5963_Assignment2/Assignment 2/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
