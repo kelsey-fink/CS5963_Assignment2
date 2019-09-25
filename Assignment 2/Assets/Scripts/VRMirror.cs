@@ -35,7 +35,14 @@ public class VRMirror : MonoBehaviour {
             rotationDiff = 180 - currentRotation.y;
             Vector3 mirrorRotation = currentRotation;
             mirrorRotation = new Vector3(currentRotation.x * -1, currentRotation.y + rotationDiff, currentRotation.z);
-            cube.transform.rotation = Quaternion.Euler(currentRotation);
+            cube.transform.rotation = Quaternion.Euler(mirrorRotation);
+
+            Vector3 currentPosition = transform.position.eulerAngles;
+            rotationDiff = 180 - currentRotation.y;
+            Vector3 mirrorRotation = currentRotation;
+            mirrorRotation = new Vector3(currentRotation.x * -1, currentRotation.y + rotationDiff, currentRotation.z);
+            cube.transform.rotation = Quaternion.Euler(mirrorRotation);
+
             Debug.Log("mirror");
         }
         if(isMatch)
