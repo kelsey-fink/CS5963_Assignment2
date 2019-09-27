@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class CameraFlipper : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public GameObject parentCam;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(Input.GetKeyDown("f"))
         {
-            Vector3 currentRotation = transform.rotation.eulerAngles;
+            Vector3 currentRotation = parentCam.transform.rotation.eulerAngles;
             currentRotation = new Vector3(currentRotation.x, currentRotation.y + 180, currentRotation.z);
-            transform.rotation = Quaternion.Euler(currentRotation);
+            parentCam.transform.rotation = Quaternion.Euler(currentRotation);
         }
     }
 }

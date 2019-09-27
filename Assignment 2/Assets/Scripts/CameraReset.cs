@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VR;
 
 public class CameraReset : MonoBehaviour {
+
+    public GameObject parentCam;
 
 	// Use this for initialization
 	void Start () {
@@ -13,8 +16,10 @@ public class CameraReset : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown("tab"))
         {
-            Debug.Log("tab");
-            transform.position = new Vector3(0, 0, 0);
+            Vector3 currentPos = transform.position;
+            Vector3 parentPos = parentCam.transform.position;
+            currentPos = new Vector3(parentPos.x - currentPos.x, parentPos.y - currentPos.y, parentPos.z - currentPos.z);
+            parentCam.transform.position = currentPos;
         }
     }
 }
