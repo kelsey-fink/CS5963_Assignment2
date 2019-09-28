@@ -14,9 +14,17 @@ public class GenerateStimuli : MonoBehaviour {
     private float startBlueRightDist;
     private float startRedDist;
 
-    private bool enabled = true;
+    private float wait;
+    private float time_waited;
+    private bool enabled;
+    private bool started;
+
     // Use this for initialization
     void Start () {
+        wait = 2.0f;
+        time_waited = 0.0f;
+        enabled = true;
+        started = false;
         redMesh = redSphere.GetComponent<MeshRenderer>();
         blueLeftMesh = blueLeftSphere.GetComponent<MeshRenderer>();
         blueRightMesh = blueRightSphere.GetComponent<MeshRenderer>();
@@ -24,6 +32,8 @@ public class GenerateStimuli : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        
+
         startRedDist = Vector3.Distance(transform.position, redSphere.transform.position);
         startBlueLeftDist = Vector3.Distance(transform.position, blueLeftSphere.transform.position);
         startBlueRightDist = Vector3.Distance(transform.position, blueRightSphere.transform.position);
@@ -34,43 +44,49 @@ public class GenerateStimuli : MonoBehaviour {
         //Debug.Log("blue size left: " + (float)blueLeftSphere.transform.localScale.x + ", " + (float)blueLeftSphere.transform.localScale.y + ", " + (float)blueLeftSphere.transform.localScale.z);
 
         blueRightSphere.transform.localScale = redSize * (startBlueRightDist / startRedDist);
-       // Debug.Log("blue size right: " + (float)blueRightSphere.transform.localScale.x + ", " + (float)blueRightSphere.transform.localScale.y + ", " + (float)blueRightSphere.transform.localScale.z);
+        // Debug.Log("blue size right: " + (float)blueRightSphere.transform.localScale.x + ", " + (float)blueRightSphere.transform.localScale.y + ", " + (float)blueRightSphere.transform.localScale.z);
+
+        if (!enabled && started)
+        {
+            time_waited += Time.deltaTime;
+            redMesh.enabled = false;
+
+            if (time_waited >= wait)
+            {
+                blueLeftMesh.enabled = false;
+                blueRightMesh.enabled = false;
+                Debug.Log(time_waited);
+                time_waited = 0.0f;
+                started = false;
+            }
+        }
+        else if (enabled && started)
+        {
+            time_waited += Time.deltaTime;
+            redMesh.enabled = true;
+
+            while (time_waited >= wait)
+            {
+                blueLeftMesh.enabled = true;
+                blueRightMesh.enabled = true;
+                Debug.Log(time_waited);
+                time_waited = 0.0f;
+                started = false;
+            }
+        }
 
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if(enabled)
+            if (enabled)
             {
-                redMesh.enabled = false;
-
-                float wait = 2.0f;
-                float time_waited = 0.0f;
-
-                while (time_waited < wait)
-                {
-                    time_waited += Time.deltaTime;
-                    Debug.Log(time_waited);
-                }
-
-                blueLeftMesh.enabled = false;
-                blueRightMesh.enabled = false;
+                started = true;
                 enabled = false;
             }
             else
             {
+                started = true;
                 enabled = true;
-                redMesh.enabled = true;
-
-                float wait = 2.0f;
-                float time_waited = 0.0f;
-
-                while (time_waited < wait)
-                {
-                    time_waited += Time.deltaTime;
-                }
-
-                blueLeftMesh.enabled = true;
-                blueRightMesh.enabled = true;
             }
         }
     }
